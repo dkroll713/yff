@@ -50,11 +50,26 @@ let monthlySchedule = {
   17: '12/27',
 };
 
-const processWeek = async (week, team, token) => {
+const compareDates = (schedule, target) => {
+  let keys = Object.keys(schedule);
+  for (let key of keys) {
+    // console.log('Week:', key, 'Date:', schedule[key]);
+    // console.log('Today:', target);
+    if (target === schedule[key]) {
+      console.log('Match found!');
+      return key;
+    } else {
+      return 0
+    }
+  }
+}
+
+const processWeek = async (team, token) => {
   try {
     const today = new Date();
     const month = today.getMonth() + 1;
     const day = today.getDate();
+    week = compareDates(monthlySchedule, `${month}/${day}`);
     const weeklyRoster = {
       'QB': [],
       'RB': [],
@@ -67,44 +82,50 @@ const processWeek = async (week, team, token) => {
       'IR': [],
       'NP': [],
     };
-    const url = `https://fantasysports.yahooapis.com/fantasy/v2/team/423.l.480220.t.${team}/roster;week=${week}`;
+    if (week !== 0) {
 
-    console.log(`[YFF] Today's date: ${month}/${day}`);
-    console.log(`[YFF] Entering process fn for team ${team} in week ${week}`);
+      const url = `https://fantasysports.yahooapis.com/fantasy/v2/team/423.l.480220.t.${team}/roster;week=${week}`;
 
-    const res = await axios.get(url, {
-      headers: {
-        Authorization: `${token}`,
-      },
-    });
+      console.log(`[YFF] Today's date: ${month}/${day}`);
+      console.log(`[YFF] Entering process fn for team ${team} in week ${week}`);
 
-    parseString(res.data, (err, result) => {
-      const players = result.fantasy_content.team[0].roster[0].players[0].player;
-      players.map((player) => {
-        const name = player.name[0].full[0];
-        const eligiblePositions = player.eligible_positions[0].position[0];
-        const selectedPosition = player.selected_position[0].position[0];
-
-        try {
-          weeklyRoster[selectedPosition].push(name);
-          if (selectedPosition !== 'BN' && selectedPosition !== 'IR' && player.status && player.status[0] !== 'Q' && player.status[0] !== 'D') {
-            weeklyRoster['NP'].push(name);
-          }
-        } catch (err) {
-          console.log('[YFF] Error creating roster object');
-          console.log('Selected position not present on obj:', selectedPosition);
-          console.log(err);
-        }
+      const res = await axios.get(url, {
+        headers: {
+          Authorization: `${token}`,
+        },
       });
 
-      // console.log(`Weekly roster for team ${team} in week ${week}:`, weeklyRoster);
-    });
-    let obj = {
-      roster: weeklyRoster,
-      team: team,
+      parseString(res.data, (err, result) => {
+        const players = result.fantasy_content.team[0].roster[0].players[0].player;
+        players.map((player) => {
+          const name = player.name[0].full[0];
+          const eligiblePositions = player.eligible_positions[0].position[0];
+          const selectedPosition = player.selected_position[0].position[0];
+
+          try {
+            weeklyRoster[selectedPosition].push(name);
+            if (selectedPosition !== 'BN' && selectedPosition !== 'IR' && player.status && player.status[0] !== 'Q' && player.status[0] !== 'D') {
+              weeklyRoster['NP'].push(name);
+            }
+          } catch (err) {
+            console.log('[YFF] Error creating roster object');
+            console.log('Selected position not present on obj:', selectedPosition);
+            console.log(err);
+          }
+        });
+
+        // console.log(`Weekly roster for team ${team} in week ${week}:`, weeklyRoster);
+      });
+      let obj = {
+        roster: weeklyRoster,
+        team: team,
+      }
+      weeklyRoster.team = team;
+      return obj;
+    } else {
+      console.log('No match found for today\'s date');
+      return null;
     }
-    weeklyRoster.team = team;
-    return obj;
   } catch (err) {
     console.log('[YFF] Error creating roster object.');
     console.log(err);
