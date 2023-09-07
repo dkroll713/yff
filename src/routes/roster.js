@@ -53,8 +53,8 @@ let monthlySchedule = {
 const compareDates = (schedule, target) => {
   let keys = Object.keys(schedule);
   for (let key of keys) {
-    // console.log('Week:', key, 'Date:', schedule[key]);
-    // console.log('Today:', target);
+    console.log('Week:', key, 'Date:', schedule[key]);
+    console.log('Today:', target);
     if (target === schedule[key]) {
       console.log('Match found!');
       return key;
