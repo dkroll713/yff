@@ -58,10 +58,9 @@ const compareDates = (schedule, target) => {
     if (target === schedule[key]) {
       console.log('Match found!');
       return key;
-    } else {
-      return 0
     }
   }
+  return 0;
 }
 
 const processWeek = async (team, token) => {
