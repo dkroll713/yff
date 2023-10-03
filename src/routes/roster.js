@@ -98,12 +98,14 @@ const processWeek = async (team, token) => {
         const players = result.fantasy_content.team[0].roster[0].players[0].player;
         players.map((player) => {
           const name = player.name[0].full[0];
+          const bye = player.bye_weeks[0].week[0];
           const eligiblePositions = player.eligible_positions[0].position[0];
           const selectedPosition = player.selected_position[0].position[0];
-
+          console.log('~~~~~')
+          console.log(`${name} bye week:`, player.bye_weeks[0].week[0], `Status: ${player.status[0]} Eligible positions: ${eligiblePositions} Selected position: ${selectedPosition}`)
           try {
             weeklyRoster[selectedPosition].push(name);
-            if (selectedPosition !== 'BN' && selectedPosition !== 'IR' && player.status && player.status[0] !== 'Q' && player.status[0] !== 'D') {
+            if (selectedPosition !== 'BN' && selectedPosition !== 'IR' && (player.status && player.status[0] !== 'Q' && player.status[0] !== 'D') || (bye && bye == week && selectedPosition !== 'BN' && selectedPosition !== 'IR')) {
               weeklyRoster['NP'].push(name);
             }
           } catch (err) {
@@ -131,66 +133,6 @@ const processWeek = async (team, token) => {
     throw err;
   }
 };
-
-// const processWeek = (week, team, token) => {
-//   let today = new Date()
-//   let month = today.getMonth() + 1
-//   let day = today.getDate()
-//   let weeklyRoster = {
-//     'QB': [],
-//     'RB': [],
-//     'WR': [],
-//     'TE': [],
-//     'W/R/T': [],
-//     'K': [],
-//     'DEF': [],
-//     'BN': [],
-//     'IR': [],
-//     'NP': [],
-//   }
-//   let url = `https://fantasysports.yahooapis.com/fantasy/v2/team/423.l.480220.t.${team}/roster;week=${week}`
-
-//   console.log(`[YFF] Today's date: ${month}/${day}`)
-//   console.log(`[YFF] Entering process fn for team ${team} in week ${week}`)
-
-//   axios.get(url, {
-//     headers: {
-//       Authorization: `${token}`
-//     }
-//   })
-//     .then((res) => {
-//       parseString(res.data, (err, result) => {
-//         let players = result.fantasy_content.team[0].roster[0].players[0].player
-//         players.map((player) => {
-//           let name = player.name[0].full[0]
-//           let eligiblePositions = player.eligible_positions[0].position[0]
-//           let selectedPosition = player.selected_position[0].position[0]
-//           // console.log('[YFF] Player name:', name)
-//           // console.log(player)
-//           // console.log('[YFF] Eligible positions:', eligiblePositions)
-//           // console.log('[YFF] Selected Positions:', selectedPosition)
-//           try {
-//             weeklyRoster[selectedPosition].push(name)
-//             if (selectedPosition !== ('BN' || 'IR') && player.status) { //&& player.status[0] !== 'Q' && player.status[0] !== 'D') {
-//               // console.log('[YFF] Player name:', name)
-//               // console.log('[YFF] Player status:', player.status[0])
-//               weeklyRoster['NP'].push(name)
-//             }
-//           } catch (err) {
-//             console.log('[YFF] Error creating roster object')
-//             console.log('Selected position not present on obj:', selectedPosition)
-//             console.log(err)
-//           }
-//         })
-//         console.log(`Weekly roster for team ${team} in week ${week}:`, weeklyRoster)
-//       })
-//       return weeklyRoster
-//     })
-//     .catch((err) => {
-//       console.log('[YFF] Error creating roster object.')
-//       console.log(err)
-//     })
-// }
 
 const executeQuery = async (query, values = []) => {
   if (values.length > 1) {
@@ -236,9 +178,9 @@ const uploadRoster = (week, team, token) => {
           let name = player.name[0].full[0]
           let eligiblePositions = player.eligible_positions[0].position[0]
           let selectedPosition = player.selected_position[0].position[0]
-          // console.log('[YFF] Player name:', name)
-          // console.log('[YFF] Eligible positions:', eligiblePositions)
-          // console.log('[YFF] Selected Positions:', selectedPosition)
+          console.log('[YFF] Player name:', name)
+          console.log('[YFF] Eligible positions:', eligiblePositions)
+          console.log('[YFF] Selected Positions:', selectedPosition)
           try {
             weeklyRoster[selectedPosition].push(name)
           } catch (err) {
@@ -247,7 +189,7 @@ const uploadRoster = (week, team, token) => {
             console.log(err)
           }
         })
-        // console.log(`Weekly roster for team ${team} in week ${week}:`, weeklyRoster)
+        console.log(`Weekly roster for team ${team} in week ${week}:`, weeklyRoster)
         let values = [weeklyRoster, team, week]
         let query =
           `

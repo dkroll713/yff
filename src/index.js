@@ -309,7 +309,7 @@ const checkAllComplete = (obj, rosters, owners) => {
   }
 
   if (complete) {
-    // console.log('Rosters:', rosters)
+    console.log('Rosters:', rosters)
     let nicknames = [];
     let msg = ``
     for (let key in rosters) {
