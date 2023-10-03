@@ -315,7 +315,7 @@ const checkAllComplete = (obj, rosters, owners) => {
     for (let key in rosters) {
       let roster = rosters[key];
       let id = roster.team;
-      if (roster['NP'].length > 0) {
+      if (roster['NP'].length > 0 || checkAllPositionsFilled(roster) === false) {
         // msg += `@${owners[id - 1].groupme_nickname} has ${roster['NP'].length} players on bye this week: ${roster['NP'].join(', ')}\n\n`
         let text = getAIText(owners[id - 1].groupme_nickname)
         text.then((insult) => {
@@ -334,6 +334,19 @@ const checkAllComplete = (obj, rosters, owners) => {
     //   bot_id: cf.test_bot_id,
     //   text: msg
     // })
+  }
+  return complete;
+}
+
+const checkAllPositionsFilled = (roster) => {
+  let complete = true;
+  let positions = ['QB', 'RB', 'WR', 'TE', 'K', 'DEF']
+  for (let key in roster) {
+    if (positions.includes(key)) {
+      if (roster[key].length === 0) {
+        complete = false;
+      }
+    }
   }
   return complete;
 }
