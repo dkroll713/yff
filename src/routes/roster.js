@@ -97,12 +97,12 @@ const processWeek = async (team, token) => {
       parseString(res.data, (err, result) => {
         const players = result.fantasy_content.team[0].roster[0].players[0].player;
         players.map((player) => {
-          const name = player.name[0].full[0];
-          const bye = player.bye_weeks[0].week[0];
-          const eligiblePositions = player.eligible_positions[0].position[0];
-          const selectedPosition = player.selected_position[0].position[0];
+          const name = player?.name[0]?.full[0];
+          const bye = player?.bye_weeks[0]?.week[0];
+          const eligiblePositions = player?.eligible_positions[0]?.position[0];
+          const selectedPosition = player?.selected_position[0]?.position[0];
           console.log('~~~~~')
-          console.log(`${name} bye week:`, player.bye_weeks[0].week[0], `Status: ${player.status[0]} Eligible positions: ${eligiblePositions} Selected position: ${selectedPosition}`)
+          console.log(`${name} bye week:`, bye, `Status: Eligible positions: ${eligiblePositions} Selected position: ${selectedPosition}`)
           try {
             weeklyRoster[selectedPosition].push(name);
             if (selectedPosition !== 'BN' && selectedPosition !== 'IR' && (player.status && player.status[0] !== 'Q' && player.status[0] !== 'D') || (bye && bye == week && selectedPosition !== 'BN' && selectedPosition !== 'IR')) {
