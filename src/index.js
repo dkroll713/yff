@@ -18,7 +18,7 @@ app.get("/", (req, res) => {
 
 app.post('/auth/yahoo', (req, res) => {
   token = req.headers.authorization
-  console.log('token:', token)
+  console.log({ token })
   // let url = `https://fantasysports.yahooapis.com/fantasy/v2/games;game_codes=nfl;seasons=2023`
   // let url = `https://fantasysports.yahooapis.com/fantasy/v2/league/423.l.480220/scoreboard`
   let week = 1;
@@ -51,202 +51,206 @@ app.post('/auth/yahoo', (req, res) => {
     12: null
   }
 
-  getOwners()
-    .then((owners) => {
-      console.log('Owner res:', owners)
-      let team1 = processWeek(1, token)
-        .then((res) => {
-          if (res !== null) {
-            rostersObj[res.team] = res.roster;
-            completionObj[res.team] = true;
+  try {
+    getOwners()
+      .then((owners) => {
+        console.log('Owner res:', owners)
+        let team1 = processWeek(1, token)
+          .then((res) => {
+            if (res !== null) {
+              rostersObj[res.team] = res.roster;
+              completionObj[res.team] = true;
 
-            if (checkAllComplete(completionObj, rostersObj, owners)) {
-              console.log('All teams complete');
-              printRosterObj(rostersObj)
+              if (checkAllComplete(completionObj, rostersObj, owners)) {
+                console.log('All teams complete');
+                printRosterObj(rostersObj)
+              }
             }
-          }
-        })
-        .catch((err) => {
-          console.log('err:', err);
-        });
+          })
+          .catch((err) => {
+            console.log('err:', err);
+          });
 
-      let team2 = processWeek(2, token)
-        .then((res) => {
-          if (res !== null) {
-            rostersObj[res.team] = res.roster;
-            completionObj[res.team] = true;
+        let team2 = processWeek(2, token)
+          .then((res) => {
+            if (res !== null) {
+              rostersObj[res.team] = res.roster;
+              completionObj[res.team] = true;
 
-            if (checkAllComplete(completionObj, rostersObj, owners)) {
-              console.log('All teams complete');
-              printRosterObj(rostersObj)
+              if (checkAllComplete(completionObj, rostersObj, owners)) {
+                console.log('All teams complete');
+                printRosterObj(rostersObj)
+              }
             }
-          }
-        })
-        .catch((err) => {
-          console.log('err:', err);
-        });
+          })
+          .catch((err) => {
+            console.log('err:', err);
+          });
 
-      let team3 = processWeek(3, token)
-        .then((res) => {
-          if (res !== null) {
-            rostersObj[res.team] = res.roster;
-            completionObj[res.team] = true;
+        let team3 = processWeek(3, token)
+          .then((res) => {
+            if (res !== null) {
+              rostersObj[res.team] = res.roster;
+              completionObj[res.team] = true;
 
-            if (checkAllComplete(completionObj, rostersObj, owners)) {
-              console.log('All teams complete');
-              printRosterObj(rostersObj)
+              if (checkAllComplete(completionObj, rostersObj, owners)) {
+                console.log('All teams complete');
+                printRosterObj(rostersObj)
+              }
             }
-          }
-        })
-        .catch((err) => {
-          console.log('err:', err);
-        });
+          })
+          .catch((err) => {
+            console.log('err:', err);
+          });
 
-      let team4 = processWeek(4, token)
-        .then((res) => {
-          if (res !== null) {
-            rostersObj[res.team] = res.roster;
-            completionObj[res.team] = true;
+        let team4 = processWeek(4, token)
+          .then((res) => {
+            if (res !== null) {
+              rostersObj[res.team] = res.roster;
+              completionObj[res.team] = true;
 
-            if (checkAllComplete(completionObj, rostersObj, owners)) {
-              console.log('All teams complete');
-              printRosterObj(rostersObj)
+              if (checkAllComplete(completionObj, rostersObj, owners)) {
+                console.log('All teams complete');
+                printRosterObj(rostersObj)
+              }
             }
-          }
-        })
-        .catch((err) => {
-          console.log('err:', err);
-        });
+          })
+          .catch((err) => {
+            console.log('err:', err);
+          });
 
-      let team5 = processWeek(5, token)
-        .then((res) => {
-          if (res !== null) {
-            rostersObj[res.team] = res.roster;
-            completionObj[res.team] = true;
+        let team5 = processWeek(5, token)
+          .then((res) => {
+            if (res !== null) {
+              rostersObj[res.team] = res.roster;
+              completionObj[res.team] = true;
 
-            if (checkAllComplete(completionObj, rostersObj, owners)) {
-              console.log('All teams complete');
-              printRosterObj(rostersObj)
+              if (checkAllComplete(completionObj, rostersObj, owners)) {
+                console.log('All teams complete');
+                printRosterObj(rostersObj)
+              }
             }
-          }
-        })
-        .catch((err) => {
-          console.log('err:', err);
-        });
+          })
+          .catch((err) => {
+            console.log('err:', err);
+          });
 
-      let team6 = processWeek(6, token)
-        .then((res) => {
-          if (res !== null) {
-            rostersObj[res.team] = res.roster;
-            completionObj[res.team] = true;
+        let team6 = processWeek(6, token)
+          .then((res) => {
+            if (res !== null) {
+              rostersObj[res.team] = res.roster;
+              completionObj[res.team] = true;
 
-            if (checkAllComplete(completionObj, rostersObj, owners)) {
-              console.log('All teams complete');
-              printRosterObj(rostersObj)
+              if (checkAllComplete(completionObj, rostersObj, owners)) {
+                console.log('All teams complete');
+                printRosterObj(rostersObj)
+              }
             }
-          }
-        })
-        .catch((err) => {
-          console.log('err:', err);
-        });
+          })
+          .catch((err) => {
+            console.log('err:', err);
+          });
 
-      let team7 = processWeek(7, token)
-        .then((res) => {
-          if (res !== null) {
-            rostersObj[res.team] = res.roster;
-            completionObj[res.team] = true;
+        let team7 = processWeek(7, token)
+          .then((res) => {
+            if (res !== null) {
+              rostersObj[res.team] = res.roster;
+              completionObj[res.team] = true;
 
-            if (checkAllComplete(completionObj, rostersObj, owners)) {
-              console.log('All teams complete');
-              printRosterObj(rostersObj)
+              if (checkAllComplete(completionObj, rostersObj, owners)) {
+                console.log('All teams complete');
+                printRosterObj(rostersObj)
+              }
             }
-          }
-        })
-        .catch((err) => {
-          console.log('err:', err);
-        });
+          })
+          .catch((err) => {
+            console.log('err:', err);
+          });
 
-      let team8 = processWeek(8, token)
-        .then((res) => {
-          if (res !== null) {
-            rostersObj[res.team] = res.roster;
-            completionObj[res.team] = true;
+        let team8 = processWeek(8, token)
+          .then((res) => {
+            if (res !== null) {
+              rostersObj[res.team] = res.roster;
+              completionObj[res.team] = true;
 
-            if (checkAllComplete(completionObj, rostersObj, owners)) {
-              console.log('All teams complete');
-              printRosterObj(rostersObj)
+              if (checkAllComplete(completionObj, rostersObj, owners)) {
+                console.log('All teams complete');
+                printRosterObj(rostersObj)
+              }
             }
-          }
-        })
-        .catch((err) => {
-          console.log('err:', err);
-        });
+          })
+          .catch((err) => {
+            console.log('err:', err);
+          });
 
-      let team9 = processWeek(9, token)
-        .then((res) => {
-          if (res !== null) {
-            rostersObj[res.team] = res.roster;
-            completionObj[res.team] = true;
+        let team9 = processWeek(9, token)
+          .then((res) => {
+            if (res !== null) {
+              rostersObj[res.team] = res.roster;
+              completionObj[res.team] = true;
 
-            if (checkAllComplete(completionObj, rostersObj, owners)) {
-              console.log('All teams complete');
-              printRosterObj(rostersObj)
+              if (checkAllComplete(completionObj, rostersObj, owners)) {
+                console.log('All teams complete');
+                printRosterObj(rostersObj)
+              }
             }
-          }
-        })
-        .catch((err) => {
-          console.log('err:', err);
-        });
+          })
+          .catch((err) => {
+            console.log('err:', err);
+          });
 
-      let team10 = processWeek(10, token)
-        .then((res) => {
-          if (res !== null) {
-            rostersObj[res.team] = res.roster;
-            completionObj[res.team] = true;
+        let team10 = processWeek(10, token)
+          .then((res) => {
+            if (res !== null) {
+              rostersObj[res.team] = res.roster;
+              completionObj[res.team] = true;
 
-            if (checkAllComplete(completionObj, rostersObj, owners)) {
-              console.log('All teams complete');
-              printRosterObj(rostersObj)
+              if (checkAllComplete(completionObj, rostersObj, owners)) {
+                console.log('All teams complete');
+                printRosterObj(rostersObj)
+              }
             }
-          }
-        })
-        .catch((err) => {
-          console.log('err:', err);
-        });
+          })
+          .catch((err) => {
+            console.log('err:', err);
+          });
 
-      let team11 = processWeek(11, token)
-        .then((res) => {
-          if (res !== null) {
-            rostersObj[res.team] = res.roster;
-            completionObj[res.team] = true;
+        let team11 = processWeek(11, token)
+          .then((res) => {
+            if (res !== null) {
+              rostersObj[res.team] = res.roster;
+              completionObj[res.team] = true;
 
-            if (checkAllComplete(completionObj, rostersObj, owners)) {
-              console.log('All teams complete');
-              printRosterObj(rostersObj)
+              if (checkAllComplete(completionObj, rostersObj, owners)) {
+                console.log('All teams complete');
+                printRosterObj(rostersObj)
+              }
             }
-          }
-        })
-        .catch((err) => {
-          console.log('err:', err);
-        });
+          })
+          .catch((err) => {
+            console.log('err:', err);
+          });
 
-      let team12 = processWeek(12, token)
-        .then((res) => {
-          if (res !== null) {
-            rostersObj[res.team] = res.roster;
-            completionObj[res.team] = true;
+        let team12 = processWeek(12, token)
+          .then((res) => {
+            if (res !== null) {
+              rostersObj[res.team] = res.roster;
+              completionObj[res.team] = true;
 
-            if (checkAllComplete(completionObj, rostersObj, owners)) {
-              console.log('All teams complete');
-              printRosterObj(rostersObj)
+              if (checkAllComplete(completionObj, rostersObj, owners)) {
+                console.log('All teams complete');
+                printRosterObj(rostersObj)
+              }
             }
-          }
-        })
-        .catch((err) => {
-          console.log('err:', err);
-        });
+          })
+          .catch((err) => {
+            console.log('err:', err);
+          });
 
-    })
+      })
+  } catch (err) {
+    console.log('err:', err)
+  }
 
   // processWeek(2, token)
   // processWeek(3, token)
@@ -314,15 +318,28 @@ const checkAllComplete = (obj, rosters, owners) => {
     let msg = ``
     for (let key in rosters) {
       let roster = rosters[key];
-      let id = roster.team;
+      let id = roster.team.toString();
       if (roster['NP'].length > 0 || checkAllPositionsFilled(roster) === false) {
         // msg += `@${owners[id - 1].groupme_nickname} has ${roster['NP'].length} players on bye this week: ${roster['NP'].join(', ')}\n\n`
-        let text = getAIText(owners[id - 1].groupme_nickname)
+        // console.log("ID:", id)
+        // console.log("Owners:", owners)
+        let text = getAIText(owners[id].nickname)
         text.then((insult) => {
           console.log('Insult:', insult)
+          console.log("Groupme ID:", owners[id].user_id)
+          const firstLoci = insult.indexOf('@')
+          const loci = [[firstLoci, owners[id].nickname.length + 1]]
+          console.log("Loci:", loci)
           axios.post('https://api.groupme.com/v3/bots/post', {
             bot_id: cf.test_bot_id,
-            text: insult
+            text: insult,
+            attachments: [
+              {
+                type: "mentions",
+                "user_ids": [`${owners[id].user_id}`],
+                loci: loci
+              }
+            ]
           })
         })
       }
