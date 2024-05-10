@@ -39,12 +39,12 @@ let monthlySchedule = {
   6: '10/11',
   7: '10/18',
   8: '10/25',
-  9: '11/1',
+  9: '11/2',
   10: '11/8',
   11: '11/15',
   12: '11/22',
   13: '11/29',
-  14: '12/6',
+  14: '12/8',
   15: '12/13',
   16: '12/20',
   17: '12/27',
@@ -215,14 +215,17 @@ const uploadRoster = (week, team, token) => {
 module.exports.processWeek = processWeek
 
 const getOwners = async () => {
-  let query = 'SELECT * FROM owners order by id;'
-  try {
-    let owners = await executeQuery(query)
-    return owners
-  } catch (err) {
-    console.log('[YFF] Error getting owners')
-    console.log(err)
-  }
+  // let query = 'SELECT * FROM owners order by id;'
+  // try {
+  //   let owners = await executeQuery(query)
+  //   console.log("Owners:", owners)
+  //   return owners
+  // } catch (err) {
+  //   console.log('[YFF] Error getting owners')
+  //   console.log(err)
+  // }
+  const owners = cf.members;
+  return owners
 }
 
 module.exports.getOwners = getOwners
