@@ -11,7 +11,7 @@ const pool = new Pool({
 })
 
 let monthlySchedule = {
-  1: '9/4',
+  1: '8/22',
   2: '9/11',
   3: '9/18',
   4: '9/25',
@@ -37,7 +37,7 @@ const compareDates = (schedule, target) => {
     // console.log('Week:', key, 'Date:', schedule[key]);
     // console.log('Today:', target);
     if (target === schedule[key]) {
-      console.log('Match found!');
+      // console.log('Match found!');
       return key;
     }
   }
@@ -66,8 +66,8 @@ const processWeek = async (team, token) => {
 
       const url = `https://fantasysports.yahooapis.com/fantasy/v2/team/${cf.game_id}.l.${cf.league_id}.t.${team}/roster;week=${week}`;
 
-      console.log(`[YFF] Today's date: ${month}/${day}`);
-      console.log(`[YFF] Entering process fn for team ${team} in week ${week}`);
+      // console.log(`[YFF] Today's date: ${month}/${day}`);
+      // console.log(`[YFF] Entering process fn for team ${team} in week ${week}`);
 
       const res = await axios.get(url, {
         headers: {
@@ -82,8 +82,8 @@ const processWeek = async (team, token) => {
           const bye = player?.bye_weeks[0]?.week[0];
           const eligiblePositions = player?.eligible_positions[0]?.position[0];
           const selectedPosition = player?.selected_position[0]?.position[0];
-          console.log('~~~~~')
-          console.log(`${name} bye week:`, bye, `Status: Eligible positions: ${eligiblePositions} Selected position: ${selectedPosition}`)
+          // console.log('~~~~~')
+          // console.log(`${name} bye week:`, bye, `Status: Eligible positions: ${eligiblePositions} Selected position: ${selectedPosition}`)
           try {
             weeklyRoster[selectedPosition].push(name);
             if (selectedPosition !== 'BN' && selectedPosition !== 'IR' && (player.status && player.status[0] !== 'Q' && player.status[0] !== 'D') || (bye && bye == week && selectedPosition !== 'BN' && selectedPosition !== 'IR')) {

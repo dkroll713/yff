@@ -26,11 +26,11 @@ def schedule_next_run():
 if __name__ == "__main__":
     next_run_time = schedule_next_run()
     print('Next run time: ' + str(next_run_time))
-    while True:
-        current_time = datetime.now()
+    # while True:
+    #     current_time = datetime.now()
 
-        if current_time >= next_run_time:
-            run_script()
-            next_run_time += timedelta(weeks=1)  # Schedule for the next Wednesday
-        else:
-            time.sleep((next_run_time - current_time).total_seconds())
+    #     if current_time >= next_run_time:
+    run_script()
+        #     next_run_time += timedelta(weeks=1)  # Schedule for the next Wednesday
+        # else:
+        #     time.sleep((next_run_time - current_time).total_seconds())
