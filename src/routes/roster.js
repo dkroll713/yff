@@ -11,7 +11,7 @@ const pool = new Pool({
 })
 
 let monthlySchedule = {
-  1: '8/22',
+  1: '9/4',
   2: '9/11',
   3: '9/18',
   4: '9/25',
