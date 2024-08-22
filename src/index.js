@@ -19,8 +19,6 @@ app.get("/", (req, res) => {
 app.post('/auth/yahoo', (req, res) => {
   token = req.headers.authorization
   console.log({ token })
-  // let url = `https://fantasysports.yahooapis.com/fantasy/v2/games;game_codes=nfl;seasons=2023`
-  // let url = `https://fantasysports.yahooapis.com/fantasy/v2/league/423.l.480220/scoreboard`
   let week = 1;
   let completionObj = {
     1: false,
@@ -54,254 +52,28 @@ app.post('/auth/yahoo', (req, res) => {
   try {
     getOwners()
       .then((owners) => {
-        console.log('Owner res:', owners)
-        let team1 = processWeek(1, token)
-          .then((res) => {
-            if (res !== null) {
-              rostersObj[res.team] = res.roster;
-              completionObj[res.team] = true;
-
-              if (checkAllComplete(completionObj, rostersObj, owners)) {
-                console.log('All teams complete');
-                printRosterObj(rostersObj)
+        // console.log('Owner res:', owners)
+        for (const owner in owners) {
+          console.log('Owner:', owner)
+          processWeek(owner, token)
+            .then((res) => {
+              if (res !== null) {
+                rostersObj[res.team] = res.roster;
+                completionObj[res.team] = true;
+                if (checkAllComplete(completionObj, rostersObj, owners)) {
+                  console.log(`All teams complete.`)
+                }
               }
-            }
-          })
-          .catch((err) => {
-            console.log('err:', err);
-          });
-
-        let team2 = processWeek(2, token)
-          .then((res) => {
-            if (res !== null) {
-              rostersObj[res.team] = res.roster;
-              completionObj[res.team] = true;
-
-              if (checkAllComplete(completionObj, rostersObj, owners)) {
-                console.log('All teams complete');
-                printRosterObj(rostersObj)
-              }
-            }
-          })
-          .catch((err) => {
-            console.log('err:', err);
-          });
-
-        let team3 = processWeek(3, token)
-          .then((res) => {
-            if (res !== null) {
-              rostersObj[res.team] = res.roster;
-              completionObj[res.team] = true;
-
-              if (checkAllComplete(completionObj, rostersObj, owners)) {
-                console.log('All teams complete');
-                printRosterObj(rostersObj)
-              }
-            }
-          })
-          .catch((err) => {
-            console.log('err:', err);
-          });
-
-        let team4 = processWeek(4, token)
-          .then((res) => {
-            if (res !== null) {
-              rostersObj[res.team] = res.roster;
-              completionObj[res.team] = true;
-
-              if (checkAllComplete(completionObj, rostersObj, owners)) {
-                console.log('All teams complete');
-                printRosterObj(rostersObj)
-              }
-            }
-          })
-          .catch((err) => {
-            console.log('err:', err);
-          });
-
-        let team5 = processWeek(5, token)
-          .then((res) => {
-            if (res !== null) {
-              rostersObj[res.team] = res.roster;
-              completionObj[res.team] = true;
-
-              if (checkAllComplete(completionObj, rostersObj, owners)) {
-                console.log('All teams complete');
-                printRosterObj(rostersObj)
-              }
-            }
-          })
-          .catch((err) => {
-            console.log('err:', err);
-          });
-
-        let team6 = processWeek(6, token)
-          .then((res) => {
-            if (res !== null) {
-              rostersObj[res.team] = res.roster;
-              completionObj[res.team] = true;
-
-              if (checkAllComplete(completionObj, rostersObj, owners)) {
-                console.log('All teams complete');
-                printRosterObj(rostersObj)
-              }
-            }
-          })
-          .catch((err) => {
-            console.log('err:', err);
-          });
-
-        let team7 = processWeek(7, token)
-          .then((res) => {
-            if (res !== null) {
-              rostersObj[res.team] = res.roster;
-              completionObj[res.team] = true;
-
-              if (checkAllComplete(completionObj, rostersObj, owners)) {
-                console.log('All teams complete');
-                printRosterObj(rostersObj)
-              }
-            }
-          })
-          .catch((err) => {
-            console.log('err:', err);
-          });
-
-        let team8 = processWeek(8, token)
-          .then((res) => {
-            if (res !== null) {
-              rostersObj[res.team] = res.roster;
-              completionObj[res.team] = true;
-
-              if (checkAllComplete(completionObj, rostersObj, owners)) {
-                console.log('All teams complete');
-                printRosterObj(rostersObj)
-              }
-            }
-          })
-          .catch((err) => {
-            console.log('err:', err);
-          });
-
-        let team9 = processWeek(9, token)
-          .then((res) => {
-            if (res !== null) {
-              rostersObj[res.team] = res.roster;
-              completionObj[res.team] = true;
-
-              if (checkAllComplete(completionObj, rostersObj, owners)) {
-                console.log('All teams complete');
-                printRosterObj(rostersObj)
-              }
-            }
-          })
-          .catch((err) => {
-            console.log('err:', err);
-          });
-
-        let team10 = processWeek(10, token)
-          .then((res) => {
-            if (res !== null) {
-              rostersObj[res.team] = res.roster;
-              completionObj[res.team] = true;
-
-              if (checkAllComplete(completionObj, rostersObj, owners)) {
-                console.log('All teams complete');
-                printRosterObj(rostersObj)
-              }
-            }
-          })
-          .catch((err) => {
-            console.log('err:', err);
-          });
-
-        let team11 = processWeek(11, token)
-          .then((res) => {
-            if (res !== null) {
-              rostersObj[res.team] = res.roster;
-              completionObj[res.team] = true;
-
-              if (checkAllComplete(completionObj, rostersObj, owners)) {
-                console.log('All teams complete');
-                printRosterObj(rostersObj)
-              }
-            }
-          })
-          .catch((err) => {
-            console.log('err:', err);
-          });
-
-        let team12 = processWeek(12, token)
-          .then((res) => {
-            if (res !== null) {
-              rostersObj[res.team] = res.roster;
-              completionObj[res.team] = true;
-
-              if (checkAllComplete(completionObj, rostersObj, owners)) {
-                console.log('All teams complete');
-                printRosterObj(rostersObj)
-              }
-            }
-          })
-          .catch((err) => {
-            console.log('err:', err);
-          });
-
+            })
+            .catch((err) => {
+              console.log('err:', err);
+            })
+        }
       })
   } catch (err) {
     console.log('err:', err)
   }
-
-  // processWeek(2, token)
-  // processWeek(3, token)
-  // processWeek(4, token)
-  // processWeek(5, token)
-  // processWeek(6, token)
-  // processWeek(7, token)
-  // processWeek(8, token)
-  // processWeek(9, token)
-  // processWeek(10, token)
-  // processWeek(11, token)
-  // processWeek(12, token)
-  //   week++
-  //   setTimeout(() => {
-  //     console.log('waiting 5 seconds')
-  //   }, 5000)
-  // }
-
-
-  res.send(200)
-
-  // let url = `https://fantasysports.yahooapis.com/fantasy/v2/team/423.l.480220.t.11/roster;week=17`
-  // let url = `https://fantasysports.yahooapis.com/fantasy/v2/team/423.l.480220.t.12/roster`
-
-  // axios.get(url, {
-  //   headers: {
-  //     Authorization: `${token}`
-  //   }
-  // })
-  //   .then((response) => {
-  //     console.log('[YFF] Success')
-  //     parseString(response.data, (err, result) => {
-  //       // console.log(result.fantasy_content.games[0].game)
-  //       let players = result.fantasy_content.team[0].roster[0]
-  //       // let players = result.fantasy_content.team[0].roster[0].players[0].player
-  //       console.log('manager:', players)
-  //       // for (let x = 0; x < players.length; x++) {
-  //       //   let player = players[x]
-  //       //   // console.log(player)
-  //       //   console.log('[YFF] Player name:', player.name[0].full)
-  //       //   console.log('[YFF] Eligible positions:', player.eligible_positions[0])
-  //       //   console.log('[YFF] Selected Positions:', player.selected_position)
-  //       // }
-  //     })
-  //     res.send(200)
-  //   })
-  //   .catch((err) => {
-  //     console.log('[YFF] Error')
-  //     console.log(err)
-  //     res.send(400)
-  //   });
+  res.sendStatus(200)
 })
 
 const checkAllComplete = (obj, rosters, owners) => {

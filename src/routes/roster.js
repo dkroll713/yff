@@ -10,51 +10,32 @@ const pool = new Pool({
   database: cf.db
 })
 
-// let monthlySchedule = {
-//   1: 'September 6, 2023',
-//   2: 'September 13, 2023',
-//   3: 'September 20, 2023',
-//   4: 'September 27, 2023',
-//   5: 'October 4, 2023',
-//   6: 'October 11, 2023',
-//   7: 'October 18, 2023',
-//   8: 'October 25, 2023',
-//   9: 'November 1, 2023',
-//   10: 'November 8, 2023',
-//   11: 'November 15, 2023',
-//   12: 'November 22, 2023',
-//   13: 'November 29, 2023',
-//   14: 'December 6, 2023',
-//   15: 'December 13, 2023',
-//   16: 'December 20, 2023',
-//   17: 'December 27, 2023',
-// }
-
 let monthlySchedule = {
-  1: '9/6',
-  2: '9/13',
-  3: '9/20',
-  4: '9/27',
-  5: '10/4',
-  6: '10/11',
-  7: '10/18',
-  8: '10/25',
-  9: '11/2',
-  10: '11/8',
-  11: '11/15',
-  12: '11/22',
-  13: '11/29',
-  14: '12/8',
-  15: '12/13',
-  16: '12/20',
-  17: '12/27',
+  1: '8/22',
+  2: '9/11',
+  3: '9/18',
+  4: '9/25',
+  5: '10/2',
+  6: '10/9',
+  7: '10/16',
+  8: '10/23',
+  9: '10/30',
+  10: '11/6',
+  11: '11/13',
+  12: '11/20',
+  13: '11/27',
+  14: '12/4',
+  15: '12/11',
+  16: '12/18',
+  17: '12/25',
+  18: '1/1',
 };
 
 const compareDates = (schedule, target) => {
   let keys = Object.keys(schedule);
   for (let key of keys) {
-    console.log('Week:', key, 'Date:', schedule[key]);
-    console.log('Today:', target);
+    // console.log('Week:', key, 'Date:', schedule[key]);
+    // console.log('Today:', target);
     if (target === schedule[key]) {
       console.log('Match found!');
       return key;
@@ -83,7 +64,7 @@ const processWeek = async (team, token) => {
     };
     if (week !== 0) {
 
-      const url = `https://fantasysports.yahooapis.com/fantasy/v2/team/423.l.480220.t.${team}/roster;week=${week}`;
+      const url = `https://fantasysports.yahooapis.com/fantasy/v2/team/${cf.game_id}.l.${cf.league_id}.t.${team}/roster;week=${week}`;
 
       console.log(`[YFF] Today's date: ${month}/${day}`);
       console.log(`[YFF] Entering process fn for team ${team} in week ${week}`);
@@ -115,7 +96,6 @@ const processWeek = async (team, token) => {
           }
         });
 
-        // console.log(`Weekly roster for team ${team} in week ${week}:`, weeklyRoster);
       });
       let obj = {
         roster: weeklyRoster,
@@ -215,15 +195,6 @@ const uploadRoster = (week, team, token) => {
 module.exports.processWeek = processWeek
 
 const getOwners = async () => {
-  // let query = 'SELECT * FROM owners order by id;'
-  // try {
-  //   let owners = await executeQuery(query)
-  //   console.log("Owners:", owners)
-  //   return owners
-  // } catch (err) {
-  //   console.log('[YFF] Error getting owners')
-  //   console.log(err)
-  // }
   const owners = cf.members;
   return owners
 }
@@ -231,16 +202,25 @@ const getOwners = async () => {
 module.exports.getOwners = getOwners
 
 const getAIText = async (owner_nickname) => {
+
+  const possiblePersonas = [
+    // 'Hulk Hogan', 'Shia LaBeouf', 'Clint Eastwood', 'Arnold Schwarzenneger'
+    'Dennis Reynolds in persona as the Golden God', 'Hulk Hogan', 'Hulk Hogan', 'Hulk Hogan'
+  ]
+  const personaIndex = Math.floor(Math.random() * possiblePersonas.length)
+
+  console.log(`Crafting an insult for @${owner_nickname} using persona ${possiblePersonas[personaIndex]}...`)
+
   let url = `https://api.openai.com/v1/chat/completions`
   let headers = {
     'Content-Type': 'application/json',
     'Authorization': `Bearer ${cf.ai_token}`
   }
   let body = {
-    "model": "gpt-4",
+    "model": "gpt-4o",
     "messages": [{
       "role": "user",
-      "content": `Craft an extremely mean and personal insult for someone who hasn't set their fantasy football lineup after being reminded constantly. Don't user more than three sentences and use American swear words. Make it sound like it was said by a mixture of Hulk Hogan and an absolute psychopath. Their name is @${owner_nickname}`
+      "content": `Craft an extremely mean and personal insult for someone who hasn't set their fantasy football lineup after being reminded constantly. Don't user more than three sentences and use American swear words. Make it sound like it was said by a mixture of ${possiblePersonas[personaIndex]} and an absolute psychopath. Their name is @${owner_nickname}`
     }],
     "temperature": 1
   }
