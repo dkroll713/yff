@@ -29,7 +29,8 @@ def schedule_for_one_minute():
     return next_run_time
 
 if __name__ == "__main__":
-    next_run_time = schedule_next_run()
+    # next_run_time = schedule_next_run()
+    next_run_time = schedule_for_one_minute()
     print('Next run time: ' + str(next_run_time))
     while True:
         current_time = datetime.now()
