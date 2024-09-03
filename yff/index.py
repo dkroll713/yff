@@ -16,12 +16,16 @@ def run_script():
 def schedule_next_run():
     # Get the current date and time
     now = datetime.now()
-    next_run_time = now + timedelta(minutes=1)
 
     # Calculate the next Wednesday 7:20 PM
-    # next_wednesday = now + timedelta(days=(2 - now.weekday() + 7) % 7)
-    # next_run_time = next_wednesday.replace(hour=19, minute=20, second=0, microsecond=0)
+    next_wednesday = now + timedelta(days=(2 - now.weekday() + 7) % 7)
+    next_run_time = next_wednesday.replace(hour=19, minute=20, second=0, microsecond=0)
 
+    return next_run_time
+
+def schedule_for_one_minute():
+    now = datetime.now()
+    next_run_time = now + timedelta(minutes=1)
     return next_run_time
 
 if __name__ == "__main__":
