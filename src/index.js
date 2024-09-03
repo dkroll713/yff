@@ -54,7 +54,7 @@ app.post('/auth/yahoo', (req, res) => {
       .then((owners) => {
         // console.log('Owner res:', owners)
         for (const owner in owners) {
-          console.log('Owner:', owner)
+          // console.log('Owner:', owner)
           processWeek(owner, token)
             .then((res) => {
               if (res !== null) {
@@ -297,7 +297,7 @@ const checkAllComplete = (obj, rosters, owners) => {
           const loci = [[firstLoci, owners[id].nickname.length + 1]]
           console.log("Loci:", loci)
           axios.post('https://api.groupme.com/v3/bots/post', {
-            bot_id: cf.test_bot_id,
+            bot_id: cf.bhffl_bot_id,
             text: insult,
             attachments: [
               {
